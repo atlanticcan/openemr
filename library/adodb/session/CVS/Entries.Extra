@@ -1,0 +1,13 @@
+/adodb-compress-bzip2.php////*///
+/adodb-compress-gzip.php////*///
+/adodb-cryptsession.php////*///
+/adodb-encrypt-mcrypt.php////*///
+/adodb-encrypt-md5.php////*///
+/adodb-encrypt-secret.php////*///
+/adodb-sess.txt////*///
+/adodb-session-clob.php////*///
+/adodb-session.php////*///
+/adodb-sessions.mysql.sql////*///
+/adodb-sessions.oracle.clob.sql////*///
+/adodb-sessions.oracle.sql////*///
+/crypt.inc.php////*///

@@ -1,0 +1,16 @@
+/adjustment_reason_codes.php////*///
+/billing_process.php////*///
+/billing_report.php////*///
+/billing_report_xml.php////*///
+/claim_status_codes.php////*///
+/freebtest.php////*///
+/get_claim_file.php////*///
+/indigent_patients_report.php////*///
+/print_billing_report.php////*///
+/remark_codes.php////*///
+/sl_eob_help.php////*///
+/sl_eob_invoice.php////*///
+/sl_eob_patient_note.php////*///
+/sl_eob_process.php////*///
+/sl_eob_search.php////*///
+/sl_receipts_report.php////*///

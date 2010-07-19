@@ -1,0 +1,13 @@
+/README////*///
+/buildLanguageDatabase.pl////*///
+/collectConstants.pl////*///
+/combineConstantsSpreadsheet.pl////*///
+/currentConstants.txt////*///
+/currentLanguage_latin1.sql////*///
+/currentLanguage_utf8.sql////*///
+/current_spreadsheet.tsv////*///
+/filterDirectories.txt////*///
+/log_buildLanguageDatabase.txt////*///
+/manuallyAddedConstants.txt////*///
+/manuallyRemovedConstants.txt////*///
+/sortCleanList.pl////*///

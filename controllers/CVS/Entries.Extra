@@ -1,0 +1,11 @@
+/C_BillingContact.class.php////*///
+/C_Document.class.php////*///
+/C_DocumentCategory.class.php////*///
+/C_Hl7.class.php////*///
+/C_InsuranceCompany.class.php////*///
+/C_InsuranceNumbers.class.php////*///
+/C_PatientFinder.class.php////*///
+/C_Pharmacy.class.php////*///
+/C_PracticeSettings.class.php////*///
+/C_Prescription.class.php////*///
+/C_X12Partner.class.php////*///
