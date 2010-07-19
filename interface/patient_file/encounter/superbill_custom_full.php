@@ -32,7 +32,6 @@ $mode = $_POST['mode'];
 $code_id = 0;
 $related_code = '';
 $active = 1;
-$reportable = 0;
 
 if (isset($mode)) {
   $code_id    = $_POST['code_id'] + 0;
@@ -44,7 +43,6 @@ if (isset($mode)) {
   $related_code = $_POST['related_code'];
   $cyp_factor = $_POST['cyp_factor'] + 0;
   $active     = empty($_POST['active']) ? 0 : 1;
-  $reportable = empty($_POST['reportable']) ? 0 : 1;
 
   $taxrates = "";
   if (!empty($_POST['taxrate'])) {
@@ -76,8 +74,7 @@ if (isset($mode)) {
         "related_code = '" . ffescape($related_code) . "', " .
         "cyp_factor = '"   . ffescape($cyp_factor)   . "', " .
         "taxrates = '"     . ffescape($taxrates)     . "', " .
-        "active = $active" . ", " .
-        "reportable = $reportable";
+        "active = $active";
       if ($code_id) {
         $query = "UPDATE codes SET $sql WHERE id = '$code_id'";
         sqlStatement($query);
@@ -102,7 +99,6 @@ if (isset($mode)) {
         $cyp_factor = 0;
         $taxrates = '';
         $active = 1;
-        $reportable = 0;
       }
     }
   }
@@ -120,7 +116,6 @@ if (isset($mode)) {
       $cyp_factor   = $row['cyp_factor'];
       $taxrates     = $row['taxrates'];
       $active       = 0 + $row['active'];
-      $reportable   = 0 + $row['reportable'];
     }
   }
 }
@@ -265,20 +260,10 @@ foreach ($code_types as $key => $value) {
  return '';
 }
 
-function codeTypeChanged(code) {
- var f = document.forms[0];
- if (f.code_type.value == 2) 
-   f.reportable.disabled = false;
- else {
-   f.reportable.checked = false;
-   f.reportable.disabled = true;
- }
-}
-
 </script>
 
 </head>
-<body class="body_top" onLoad="codeTypeChanged();" >
+<body class="body_top">
 
 <?php if ($GLOBALS['concurrent_layout']) {
 } else { ?>
@@ -304,7 +289,7 @@ function codeTypeChanged(code) {
   <td><?php xl('Type','e'); ?>:</td>
   <td width="5"></td>
   <td>
-   <select name="code_type" onChange="codeTypeChanged();">
+   <select name="code_type">
 <?php foreach ($code_types as $key => $value) { ?>
     <option value="<?php  echo $value['id'] ?>"<?php if ($GLOBALS['code_type'] == $value['id']) echo " selected" ?>><?php echo $key ?></option>
 <?php } ?>
@@ -343,9 +328,6 @@ function codeTypeChanged(code) {
 <?php
 generate_form_field(array('data_type'=>1,'field_id'=>'superbill','list_id'=>'superbill'), $superbill);
 ?>
-   &nbsp;&nbsp;
-   <input type='checkbox' name='reportable' value='1'<?php if (!empty($reportable)) echo ' checked'; ?> />
-   <?php xl('Reportable','e'); ?>
   </td>
  </tr>
 
@@ -465,7 +447,6 @@ foreach ($code_types as $key => $value) {
   <td><span class='bold'><?php xl('Code','e'); ?></span></td>
   <td><span class='bold'><?php xl('Mod','e'); ?></span></td>
   <td><span class='bold'><?php xl('Act','e'); ?></span></td>
-  <td><span class='bold'><?php xl('Rep','e'); ?></span></td>
   <td><span class='bold'><?php xl('Type','e'); ?></span></td>
   <td><span class='bold'><?php xl('Description','e'); ?></span></td>
 <?php if (related_codes_are_used()) { ?>
@@ -505,7 +486,6 @@ if (!empty($all)) {
     echo "  <td class='text'>" . $iter["code"] . "</td>\n";
     echo "  <td class='text'>" . $iter["modifier"] . "</td>\n";
     echo "  <td class='text'>" . ($iter["active"] ? xl('Yes') : xl('No')) . "</td>\n";
-    echo "  <td class='text'>" . ($iter["reportable"] ? xl('Yes') : xl('No')) . "</td>\n";
     echo "  <td class='text'>$key</td>\n";
     echo "  <td class='text'>" . $iter['code_text'] . "</td>\n";
 

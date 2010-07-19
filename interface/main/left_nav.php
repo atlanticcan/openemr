@@ -116,8 +116,8 @@
   'new' => array(xl('New Pt')    , 0, 'new/new.php'),
   'dem' => array(xl('Patient')   , 1,  "patient_file/summary/demographics.php"),
   'his' => array(xl('History')   , 1, 'patient_file/history/history.php'),
-  'ens' => array(xl('Visit History'), 1, 'patient_file/history/encounters.php'),
-  'nen' => array(xl('Create Visit'), 1, 'forms/newpatient/new.php?autoloaded=1&calenc='),
+  'ens' => array(xl('Encounters'), 1, 'patient_file/history/encounters.php'),
+  'nen' => array(xl('New Enctr') , 1, 'forms/newpatient/new.php?autoloaded=1&calenc='),
   'pre' => array(xl('Rx')        , 1, 'patient_file/summary/rx_frameset.php'),
   'iss' => array(xl('Issues')    , 1, 'patient_file/summary/stats_full.php?active=all'),
   'imm' => array(xl('Immunize')  , 1, 'patient_file/summary/immunizations.php'),
@@ -461,7 +461,7 @@ function genPopupsList($style='') {
 
 function goHome() {
     top.frames['RTop'].location='<?php echo $GLOBALS['default_top_pane']?>';
-    top.frames['RBot'].location='messages/messages.php';
+    top.frames['RBot'].location='authorizations/authorizations.php';
 }
 
  //
@@ -521,8 +521,8 @@ function goHome() {
    setRadio('rb_top', 'cal');
   }
   if (botName.length > 3 && botName.substring(3) > '0' && frname != 'RBot') {
-   loadFrame('ens0','RBot', '<?php echo $primary_docs['ens'][2]; ?>');
-   setRadio('rb_bot', 'ens');
+   loadFrame('aun0','RBot', '<?php echo $primary_docs['aun'][2]; ?>');
+   setRadio('rb_bot', 'aun');
   }
  }
 
@@ -561,13 +561,13 @@ function goHome() {
   var encounter_block = $(parent.Title.document.getElementById('current_encounter_block'));
   $(encounter_block).hide();
 
-  // zero out the encounter frame, replace it with the encounter list frame
+  // zero out the encounter frame, replace it with the authorizations frame
   var f = document.forms[0];
   if ( f.cb_top.checked && f.cb_bot.checked ) {
       var encounter_frame = getEncounterTargetFrame('enc');
       if ( encounter_frame != undefined )  {
-          loadFrame('ens0',encounter_frame, '<?php echo $primary_docs['ens'][2]; ?>');
-          setRadio(encounter_frame, 'ens');
+          loadFrame('aun0',encounter_frame, '<?php echo $primary_docs['aun'][2]; ?>');
+          setRadio(encounter_frame, 'aun');
       }
    }
   }
@@ -868,17 +868,22 @@ function getEncounterTargetFrame( name ) {
 
 <ul id="navigation">
   <?php if (!$GLOBALS['disable_calendar'] && !$GLOBALS['ippf_specific']) genTreeLink('RTop','cal',xl('Calendar')); ?>
-  <?php genTreeLink('RBot','msg',xl('Messages')); ?>
+  <?php genTreeLink('RTop','msg',xl('Messages')); ?>
   <li class="open"><span><?php xl('Patient/Client','e') ?></span>
     <ul>
+      <li><span><?php xl('Management','e') ?></span>
+        <ul>
           <?php genTreeLink('RTop','new',($GLOBALS['full_new_patient_form'] ? xl('New/Search') : xl('New'))); ?>
-          <?php genTreeLink('RTop','dem',xl('Summary')); ?>
+          <?php genTreeLink('RTop','dem',xl('Current')); ?>
+        </ul>
+      </li>
       <li class="open"><span><?php xl('Visits','e') ?></span>
         <ul>
           <?php if ($GLOBALS['ippf_specific'] && !$GLOBALS['disable_calendar']) genTreeLink('RTop','cal',xl('Calendar')); ?>
-          <?php genTreeLink('RBot','nen',xl('Create Visit')); ?>
+          <?php genTreeLink('RBot','nen',xl('New Visit')); ?>
           <?php genTreeLink('RBot','enc',xl('Current')); ?>
-          <?php genTreeLink('RBot','ens',xl('Visit History')); ?>
+          <?php genTreeLink('RBot','ens',xl('List')); ?>
+          <?php if (!$GLOBALS['disable_chart_tracker']) genPopLink(xl('Chart Tracker'),'../../custom/chart_tracker.php'); ?>
         </ul>
       </li>
       <li><span><?php xl('Visit Forms','e') ?></span>
@@ -990,7 +995,6 @@ if (!empty($reg)) {
           <?php if (!$GLOBALS['disable_chart_tracker']) genMiscLink('RTop','rep','0',xl('Chart Activity'),'reports/chart_location_activity.php'); ?>
           <?php if (!$GLOBALS['disable_chart_tracker']) genMiscLink('RTop','rep','0',xl('Charts Out'),'reports/charts_checked_out.php'); ?>
           <?php genMiscLink('RTop','rep','0',xl('Services'), 'reports/services_by_category.php'); ?>
-          <?php genMiscLink('RTop','rep','0',xl('Syndromic Surveillance'),'reports/non_reported.php'); ?>
         </ul>
       </li>
 <?php if (acl_check('acct', 'rep_a')) { ?>
@@ -1109,7 +1113,7 @@ if (!empty($reg)) {
   echo "  <td class='smalltext' id='lbl_$key'>$label</td>\n";
   echo "  <td class='smalltext'><input type='radio' name='rb_bot' value='$key$usage' " .
        "onclick=\"loadFrame('$key$usage','RBot','$url')\"";
-  if ($key == 'msg') echo " checked";
+  if ($key == 'aun') echo " checked";
   echo " /></td>\n";
   echo " </tr>\n";
  }

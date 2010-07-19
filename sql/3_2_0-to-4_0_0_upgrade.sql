@@ -50,22 +50,6 @@
 --  #EndIf
 --    all blocks are terminated with and #EndIf statement. 
 
-#IfMissingColumn log patient_id
-ALTER TABLE log ADD patient_id bigint(20) DEFAULT NULL;
-#EndIf
-
-#IfMissingColumn log success
-ALTER TABLE log ADD success tinyint(1) DEFAULT 1;
-#EndIf
-
-#IfMissingColumn log checksum
-ALTER TABLE log ADD checksum longtext DEFAULT NULL;
-#EndIf
-
-#IfMissingColumn log crt_user
-ALTER TABLE log ADD crt_user varchar(255) DEFAULT NULL;
-#EndIf
-
 #IfNotRow2Dx2 list_options list_id language option_id armenian title Armenian
 INSERT INTO list_options ( list_id, option_id, title, seq, is_default ) VALUES ('language', 'armenian', 'Armenian', 10, 0);
 #EndIf
@@ -601,6 +585,22 @@ UPDATE registry SET category = 'Administrative' WHERE category = 'category' AND 
 UPDATE registry SET category = 'Administrative' WHERE category = 'category' AND directory = 'misc_billing_options';
 UPDATE registry SET category = 'Clinical' WHERE category = 'category';
 
+#IfMissingColumn log patient_id
+ALTER TABLE log ADD patient_id bigint(20) DEFAULT NULL;
+#EndIf
+ 
+#IfMissingColumn log success
+ALTER TABLE log ADD success tinyint(1) DEFAULT 1;
+#EndIf
+ 
+#IfMissingColumn log checksum
+ALTER TABLE log ADD checksum longtext DEFAULT NULL;
+#EndIf
+ 
+#IfMissingColumn log crt_user
+ALTER TABLE log ADD crt_user varchar(255) DEFAULT NULL;
+#EndIf
+
 #IfMissingColumn users default_warehouse
 ALTER TABLE users ADD default_warehouse varchar(31) NOT NULL DEFAULT '';
 #EndIf
@@ -691,22 +691,5 @@ INSERT INTO code_types (ct_key, ct_id, ct_seq, ct_mod, ct_just, ct_fee, ct_rel, 
 
 #IfNotRow2D list_options list_id lists option_id code_types
 INSERT INTO list_options ( list_id, option_id, title, seq ) VALUES ('lists', 'code_types', 'Code Types', 1);
-#EndIf
-
-#IfMissingColumn codes reportable
-ALTER TABLE `codes` 
-  ADD `reportable` TINYINT(1) DEFAULT 0 COMMENT '0 = non-reportable, 1 = reportable',
---UPDATE codes SET reportable = 0 ;
-#EndIf
-
-#IfNotTable syndromic_surveillance
-CREATE TABLE `syndromic_surveillance` (
-  `id` bigint(20) NOT NULL auto_increment,
-  `lists_id` bigint(20) NOT NULL,
-  `submission_date` datetime NOT NULL,
-  `filename` varchar(255) NOT NULL default '',
-  PRIMARY KEY  (`id`),
-  KEY (`lists_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 #EndIf
 
